@@ -7,8 +7,9 @@
 # Create a VPC
 ##############################################################################
 
-data "ibm_is_vpc" "vpc" {
-  name = "${var.vpc_name}"
+resource "ibm_is_vpc" "vpc" {
+  name           = "${var.vpc_name}"
+  resource_group = "${data.ibm_resource_group.all_rg.id}"
 }
 
 ##############################################################################
@@ -53,7 +54,7 @@ resource "ibm_is_vpc_address_prefix" "subnet_prefix" {
 resource "ibm_is_subnet" "az1_subnet" {
   count           = "1"
   name            = "${var.unique_id}-az1-${element(var.subnet-cat, count.index)}"
-  vpc             = "${data.ibm_is_vpc.vpc.id}"
+  vpc             = "${ibm_is_vpc.vpc.id}"
   zone            = "${element(var.az_list, 0)}"
   ipv4_cidr_block = "${element(var.az1_subnet, count.index)}"
   network_acl     = "${ibm_is_network_acl.multizone_acl.id}"
@@ -63,7 +64,7 @@ resource "ibm_is_subnet" "az1_subnet" {
 resource "ibm_is_subnet" "az2_subnet" {
   count           = "1"
   name            = "${var.unique_id}-az2-${element(var.subnet-cat, count.index)}"
-  vpc             = "${data.ibm_is_vpc.vpc.id}"
+  vpc             = "${ibm_is_vpc.vpc.id}"
   zone            = "${element(var.az_list, 1)}"
   ipv4_cidr_block = "${element(var.az2_subnet, count.index)}"
   network_acl     = "${ibm_is_network_acl.multizone_acl.id}"

@@ -11,7 +11,7 @@ variable az_list {
   default     = ["us-south-1", "us-south-2", "us-south-3"]
 }
 
-variable resource_group_id {
+variable resource_group_name {
   description = "ID for IBM Cloud Resource Group"
 }
 
@@ -21,7 +21,7 @@ variable generation {
 }
 
 variable unique_id {
-  description = "The IBM Cloud platform API key needed to deploy IAM enabled resources"
+  description = "The vpc unique id"
   default     = "ssh1"
 }
 

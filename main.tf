@@ -1,7 +1,6 @@
 provider "ibm" {
-  region = "${var.region}"
+  region = "${var.ibm_region}"
 
   #ibmcloud_api_key = "${var.ibmcloud_api_key}"
-  generation       = "${var.generation}"
-  ibmcloud_timeout = "${var.ibmcloud_timeout}"
+  generation = "${var.generation}"
 }
