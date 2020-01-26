@@ -23,27 +23,27 @@ resource "ibm_is_vpc_address_prefix" "subnet_prefix" {
 
   name = "${var.unique_id}-az-${count.index + 1}"
   zone = "${element(var.az_list, count.index)}"
-  vpc  = "${data.ibm_is_vpc.vpc.id}"
+  vpc  = "${ibm_is_vpc.vpc.id}"
   cidr = "${element(var.az-prefix, count.index)}"
 }
 
-#resource "ibm_is_vpc_address_prefix" "middle_subnet_prefix" {
-#  count = "3"
+resource "ibm_is_vpc_address_prefix" "middle_subnet_prefix" {
+  count = "1"
 
-#  name  = "${var.unique_id}-prefix-zone-${count.index + 1}"
-#  zone  = "${var.ibm_region}-${(count.index % 3) + 1}"
-#  vpc   = "${ibm_is_vpc.vpc.id}"
-#  cidr  = "${element(var.middle_cidr_blocks, count.index)}"
-#}
+  name = "${var.unique_id}-prefix-zone-${count.index + 1}"
+  zone = "${var.ibm_region}-${(count.index % 3) + 1}"
+  vpc  = "${ibm_is_vpc.vpc.id}"
+  cidr = "${element(var.middle_cidr_blocks, count.index)}"
+}
 
-#resource "ibm_is_vpc_address_prefix" "front_subnet_prefix" {
-#  count = "3"
-#
-#  name  = "${var.unique_id}-prefix-zone-${count.index + 1}"
-#  zone  = "${var.ibm_region}-${(count.index % 3) + 1}"
-#  vpc   = "${ibm_is_vpc.vpc.id}"
-#  cidr  = "${element(var.front_cidr_blocks, count.index)}"
-#}
+resource "ibm_is_vpc_address_prefix" "front_subnet_prefix" {
+  count = "1"
+
+  name = "${var.unique_id}-prefix-zone-${count.index + 1}"
+  zone = "${var.ibm_region}-${(count.index % 3) + 1}"
+  vpc  = "${ibm_is_vpc.vpc.id}"
+  cidr = "${element(var.front_cidr_blocks, count.index)}"
+}
 
 ##############################################################################
 
@@ -74,7 +74,7 @@ resource "ibm_is_subnet" "az2_subnet" {
 resource "ibm_is_subnet" "az3_subnet" {
   count           = "1"
   name            = "${var.unique_id}-az3-${element(var.subnet-cat, count.index)}"
-  vpc             = "${data.ibm_is_vpc.vpc.id}"
+  vpc             = "${ibm_is_vpc.vpc.id}"
   zone            = "${element(var.az_list, 2)}"
   ipv4_cidr_block = "${element(var.az3_subnet, count.index)}"
   network_acl     = "${ibm_is_network_acl.multizone_acl.id}"
