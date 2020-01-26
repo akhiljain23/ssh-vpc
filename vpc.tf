@@ -30,7 +30,7 @@ resource "ibm_is_vpc_address_prefix" "subnet_prefix" {
 resource "ibm_is_vpc_address_prefix" "middle_subnet_prefix" {
   count = "1"
 
-  name = "${var.unique_id}-prefix-zone-${count.index + 1}"
+  name = "${var.unique_id}-middle-prefix-zone-${count.index + 1}"
   zone = "${var.ibm_region}-${(count.index % 3) + 1}"
   vpc  = "${ibm_is_vpc.vpc.id}"
   cidr = "${element(var.middle_cidr_blocks, count.index)}"
@@ -39,7 +39,7 @@ resource "ibm_is_vpc_address_prefix" "middle_subnet_prefix" {
 resource "ibm_is_vpc_address_prefix" "front_subnet_prefix" {
   count = "1"
 
-  name = "${var.unique_id}-prefix-zone-${count.index + 1}"
+  name = "${var.unique_id}-front-prefix-zone-${count.index + 1}"
   zone = "${var.ibm_region}-${(count.index % 3) + 1}"
   vpc  = "${ibm_is_vpc.vpc.id}"
   cidr = "${element(var.front_cidr_blocks, count.index)}"
