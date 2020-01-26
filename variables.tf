@@ -51,13 +51,13 @@ variable subnet-cat {
   default = ["tr", "ut", "st", "in"]
 }
 
-#variable middle_cidr_blocks {
-#  default = ["172.16.4.0/25", "172.16.2.0/25", "172.16.0.0/25"]  
-#}
+variable middle_cidr_blocks {
+  default = ["172.16.4.0/25", "172.16.2.0/25", "172.16.0.0/25"]
+}
 
-#variable front_cidr_blocks {
-#  default = ["172.16.1.0/26", "172.16.3.0/26", "172.16.5.0/26"]  
-#}
+variable front_cidr_blocks {
+  default = ["172.16.1.0/26", "172.16.3.0/26", "172.16.5.0/26"]
+}
 
 ##############################################################################
 variable vpc_name {
