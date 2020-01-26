@@ -7,7 +7,7 @@ resource "ibm_is_network_acl" "multizone_acl" {
 
   rules = [
     {
-      # name        = "ingress"
+      name        = "outbound1"
       action      = "allow"
       source      = "0.0.0.0/0"
       destination = "0.0.0.0/0"
@@ -19,7 +19,7 @@ resource "ibm_is_network_acl" "multizone_acl" {
       }
     },
     {
-      # name        = "egress"
+      name        = "outbound1"
       action      = "allow"
       source      = "0.0.0.0/0"
       destination = "0.0.0.0/0"
