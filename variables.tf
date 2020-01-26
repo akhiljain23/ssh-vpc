@@ -20,6 +20,11 @@ variable generation {
   default     = 2
 }
 
+variable unique_id {
+  description = "The IBM Cloud platform API key needed to deploy IAM enabled resources"
+  default     = "ssh1"
+}
+
 ##############################################################################
 
 ##############################################################################
