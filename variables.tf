@@ -81,4 +81,9 @@ data "ibm_is_image" "os" {
   name = "${var.image_name}"
 }
 
-variable ibm_is_ssh_key_id {}
+data "ibm_is_ssh_key" "sshkey" {
+  name = "${var.ssh_key_name}"
+}
+
+#variable ibm_is_ssh_key_id {}
+
