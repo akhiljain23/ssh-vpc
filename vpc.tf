@@ -62,27 +62,31 @@ resource "ibm_is_subnet" "az1_subnet" {
   public_gateway = "${element(ibm_is_public_gateway.test_gateway.*.id, 0)}"
 }
 
-resource "ibm_is_subnet" "az2_subnet" {
-  count           = "1"
-  name            = "${var.unique_id}-az2-${element(var.subnet-cat, count.index)}"
-  vpc             = "${ibm_is_vpc.vpc.id}"
-  zone            = "${element(var.az_list, 1)}"
-  ipv4_cidr_block = "${element(var.az2_subnet, count.index)}"
+# resource "ibm_is_subnet" "az2_subnet" {
+#   count           = "1"
+#   name            = "${var.unique_id}-az2-${element(var.subnet-cat, count.index)}"
+#   vpc             = "${ibm_is_vpc.vpc.id}"
+#   zone            = "${element(var.az_list, 1)}"
+#   ipv4_cidr_block = "${element(var.az2_subnet, count.index)}"
 
-  #network_acl     = "${ibm_is_network_acl.multizone_acl.id}"
-  public_gateway = "${element(ibm_is_public_gateway.test_gateway.*.id, 1)}"
-}
 
-resource "ibm_is_subnet" "az3_subnet" {
-  count           = "1"
-  name            = "${var.unique_id}-az3-${element(var.subnet-cat, count.index)}"
-  vpc             = "${ibm_is_vpc.vpc.id}"
-  zone            = "${element(var.az_list, 2)}"
-  ipv4_cidr_block = "${element(var.az3_subnet, count.index)}"
+#   #network_acl     = "${ibm_is_network_acl.multizone_acl.id}"
+#   public_gateway = "${element(ibm_is_public_gateway.test_gateway.*.id, 1)}"
+# }
 
-  #network_acl     = "${ibm_is_network_acl.multizone_acl.id}"
-  public_gateway = "${element(ibm_is_public_gateway.test_gateway.*.id, 2)}"
-}
+
+# resource "ibm_is_subnet" "az3_subnet" {
+#   count           = "1"
+#   name            = "${var.unique_id}-az3-${element(var.subnet-cat, count.index)}"
+#   vpc             = "${ibm_is_vpc.vpc.id}"
+#   zone            = "${element(var.az_list, 2)}"
+#   ipv4_cidr_block = "${element(var.az3_subnet, count.index)}"
+
+
+#   #network_acl     = "${ibm_is_network_acl.multizone_acl.id}"
+#   public_gateway = "${element(ibm_is_public_gateway.test_gateway.*.id, 2)}"
+# }
+
 
 # resource "ibm_is_subnet" "middle-subnet" {
 #   count           = "1"
