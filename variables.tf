@@ -64,3 +64,17 @@ variable vpc_name {
   description = "name of vpc"
   default     = "ssh-vpc"
 }
+
+variable "profile" {
+  default = "cx2-2x4"
+}
+
+variable "image_name" {
+  default = "ibm-centos-7-0-64"
+}
+
+ibm_is_image_id = "${data.ibm_is_image.os.id}"
+
+data "ibm_is_image" "os" {
+  name = "${image_name}"
+}

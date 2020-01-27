@@ -22,32 +22,27 @@ resource "ibm_is_security_group_rule" "bastion_ingress_ssh_all" {
 #   direction = "outbound"
 #   remote    = "${ibm_is_security_group.maintenance.id}"
 
-
 #   tcp = {
 #     port_min = 22
 #     port_max = 22
 #   }
 # }
 
+resource "ibm_is_instance" "bastion" {
+  name    = "${var.unique_id}--bastion-vsi"
+  image   = "${var.ibm_is_image_id}"
+  profile = "${var.profile}"
 
-# resource "ibm_is_instance" "bastion" {
-#   name    = "${var.basename}-bastion-vsi"
-#   image   = "${var.ibm_is_image_id}"
-#   profile = "${var.profile}"
+  primary_network_interface = {
+    subnet          = "${var.ibm_is_subnet_id}"
+    security_groups = ["${ibm_is_security_group.bastion.id}"]
+  }
 
-
-#   primary_network_interface = {
-#     subnet          = "${var.ibm_is_subnet_id}"
-#     security_groups = ["${ibm_is_security_group.bastion.id}"]
-#   }
-
-
-#   vpc            = "${var.ibm_is_vpc_id}"
-#   zone           = "${element(var.az_list, count.index)}"
-#   resource_group = "${var.ibm_is_resource_group_id}"
-#   keys           = ["${var.ibm_is_ssh_key_id}"]
-# }
-
+  vpc            = "${var.ibm_is_vpc_id}"
+  zone           = "${element(var.az_list, count.index)}"
+  resource_group = "${var.ibm_is_resource_group_id}"
+  keys           = ["${var.ibm_is_ssh_key_id}"]
+}
 
 # resource "ibm_is_floating_ip" "bastion" {
 #   name   = "${var.basename}-bastion-ip"
