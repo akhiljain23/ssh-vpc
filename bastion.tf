@@ -41,7 +41,7 @@ resource "ibm_is_instance" "bastion" {
   vpc            = "${ibm_is_vpc.vpc.id}"
   zone           = "${element(var.az_list, count.index)}"
   resource_group = "${data.ibm_resource_group.all_rg.id}"
-  keys           = ["${ibm_is_ssh_key.sshkey.id}"]
+  keys           = ["${data.ibm_is_ssh_key.sshkey.id}"]
 }
 
 # resource "ibm_is_floating_ip" "bastion" {
