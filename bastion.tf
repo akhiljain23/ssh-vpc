@@ -44,10 +44,11 @@ resource "ibm_is_instance" "bastion" {
   keys           = ["${data.ibm_is_ssh_key.sshkey.id}"]
 }
 
-# resource "ibm_is_floating_ip" "bastion" {
-#   name   = "${var.basename}-bastion-ip"
-#   target = "${ibm_is_instance.bastion.primary_network_interface.0.id}"
-# }
+resource "ibm_is_floating_ip" "bastion" {
+  name   = "${var.unique_id}-bastion-ip"
+  target = "${ibm_is_instance.bastion.primary_network_interface.0.id}"
+}
+
 /*
 # resource "ibm_is_security_group_rule" "maintenance_egress_443" {
 #   group     = "${ibm_is_security_group.maintenance.id}"
