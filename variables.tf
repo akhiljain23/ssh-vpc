@@ -73,8 +73,12 @@ variable "image_name" {
   default = "ibm-centos-7-0-64"
 }
 
-ibm_is_image_id = "${data.ibm_is_image.os.id}"
+variable "ibm_is_image_id" {
+  default = "${data.ibm_is_image.os.id}"
+}
 
 data "ibm_is_image" "os" {
   name = "${image_name}"
 }
+
+variable ibm_is_ssh_key_id {}

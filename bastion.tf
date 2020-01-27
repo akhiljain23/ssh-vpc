@@ -34,13 +34,13 @@ resource "ibm_is_instance" "bastion" {
   profile = "${var.profile}"
 
   primary_network_interface = {
-    subnet          = "${var.ibm_is_subnet_id}"
+    subnet          = "${element(ibm_is_subnet.az1_subnet, 0)}"
     security_groups = ["${ibm_is_security_group.bastion.id}"]
   }
 
-  vpc            = "${var.ibm_is_vpc_id}"
+  vpc            = "${ibm_is_vpc.vpc.id}"
   zone           = "${element(var.az_list, count.index)}"
-  resource_group = "${var.ibm_is_resource_group_id}"
+  resource_group = "${data.ibm_resource_group.all_rg.id}"
   keys           = ["${var.ibm_is_ssh_key_id}"]
 }
 
