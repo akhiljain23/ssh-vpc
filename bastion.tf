@@ -30,11 +30,11 @@ resource "ibm_is_security_group_rule" "bastion_ingress_ssh_all" {
 
 resource "ibm_is_instance" "bastion" {
   name    = "${var.unique_id}--bastion-vsi"
-  image   = "${var.ibm_is_image_id}"
+  image   = "${data.ibm_is_image.os.id}"
   profile = "${var.profile}"
 
   primary_network_interface = {
-    subnet          = "${element(ibm_is_subnet.az1_subnet.id, 0)}"
+    subnet          = "${element(ibm_is_subnet.az1_subnet, 0)}"
     security_groups = ["${ibm_is_security_group.bastion.id}"]
   }
 
