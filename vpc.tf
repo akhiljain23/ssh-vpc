@@ -84,25 +84,29 @@ resource "ibm_is_subnet" "az3_subnet" {
   public_gateway = "${element(ibm_is_public_gateway.test_gateway.*.id, 2)}"
 }
 
-resource "ibm_is_subnet" "middle-subnet" {
-  count           = "1"
-  name            = "${var.unique_id}-middle-subnet-${count.index + 1}"
-  vpc             = "${ibm_is_vpc.vpc.id}"
-  zone            = "var.az_list[count.index]"
-  ipv4_cidr_block = "${element(ibm_is_vpc_address_prefix.middle_subnet_prefix.*.cidr, count.index)}"
+# resource "ibm_is_subnet" "middle-subnet" {
+#   count           = "1"
+#   name            = "${var.unique_id}-middle-subnet-${count.index + 1}"
+#   vpc             = "${ibm_is_vpc.vpc.id}"
+#   zone            = "var.az_list[count.index]"
+#   ipv4_cidr_block = "${element(ibm_is_vpc_address_prefix.middle_subnet_prefix.*.cidr, count.index)}"
 
-  #network_acl     = "${ibm_is_network_acl.multizone_acl.id}"
-}
 
-resource "ibm_is_subnet" "front-subnet" {
-  count           = "1"
-  name            = "${var.unique_id}-front-subnet-${count.index + 1}"
-  vpc             = "${ibm_is_vpc.vpc.id}"
-  zone            = "var.az_list[count.index]"
-  ipv4_cidr_block = "${element(ibm_is_vpc_address_prefix.front_subnet_prefix.*.cidr, count.index)}"
+#   #network_acl     = "${ibm_is_network_acl.multizone_acl.id}"
+# }
 
-  #network_acl     = "${ibm_is_network_acl.multizone_acl.id}"
-}
+
+# resource "ibm_is_subnet" "front-subnet" {
+#   count           = "1"
+#   name            = "${var.unique_id}-front-subnet-${count.index + 1}"
+#   vpc             = "${ibm_is_vpc.vpc.id}"
+#   zone            = "var.az_list[count.index]"
+#   ipv4_cidr_block = "${element(ibm_is_vpc_address_prefix.front_subnet_prefix.*.cidr, count.index)}"
+
+
+#   #network_acl     = "${ibm_is_network_acl.multizone_acl.id}"
+# }
+
 
 ##############################################################################
 
