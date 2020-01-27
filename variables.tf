@@ -85,5 +85,4 @@ data "ibm_is_ssh_key" "sshkey" {
   name = "${var.ssh_key_name}"
 }
 
-#variable ibm_is_ssh_key_id {}
-
+variable ssh_key_name {}
