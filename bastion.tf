@@ -34,7 +34,7 @@ resource "ibm_is_instance" "bastion" {
   profile = "${var.profile}"
 
   primary_network_interface = {
-    subnet          = "${element(ibm_is_subnet.az1_subnet.id, 0)}"
+    subnet          = "${ibm_is_subnet.az1_subnet.id}"
     security_groups = ["${ibm_is_security_group.bastion.id}"]
   }
 
