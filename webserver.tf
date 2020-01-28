@@ -90,6 +90,6 @@ resource "ibm_is_security_group_rule" "dns" {
     port_max = 53
   }
 
-  remote = "10.0.0.0/8"
+  remote = "161.26.0.0/8"
   group  = "${ibm_is_security_group.webserver.id}"
 }
