@@ -4,7 +4,7 @@ resource "ibm_is_security_group" "webserver" {
   vpc  = "${ibm_is_vpc.vpc.id}"
 }
 
-# users of the bastian. for example from on premises
+# users of the bastion. for example from on premises
 resource "ibm_is_security_group_rule" "webserver_ingress_ssh_all" {
   group     = "${ibm_is_security_group.webserver.id}"
   direction = "inbound"
@@ -17,16 +17,16 @@ resource "ibm_is_security_group_rule" "webserver_ingress_ssh_all" {
   }
 }
 
-resource "ibm_is_security_group_rule" "webserver_egress_ssh_all" {
-  group     = "${ibm_is_security_group.webserver.id}"
-  direction = "outbound"
-  remote    = "${ibm_is_security_group.maintenance.id}"
+# resource "ibm_is_security_group_rule" "webserver_egress_ssh_all" {
+#   group     = "${ibm_is_security_group.webserver.id}"
+#   direction = "outbound"
+#   remote    = "${ibm_is_security_group.maintenance.id}"
 
-  tcp = {
-    port_min = 22
-    port_max = 22
-  }
-}
+#   tcp = {
+#     port_min = 22
+#     port_max = 22
+#   }
+# }
 
 resource "ibm_is_instance" "webserver" {
   name    = "${var.unique_id}--webserver-vsi"

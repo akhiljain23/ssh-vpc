@@ -9,7 +9,7 @@ resource "ibm_is_security_group_rule" "bastion_ingress_ssh_all" {
   group     = "${ibm_is_security_group.bastion.id}"
   direction = "inbound"
 
-  remote = "${ibm_is.security_group.webserver.id}"
+  remote = "${var.bastion_ingress_cidr}"
 
   tcp = {
     port_min = 22
@@ -20,7 +20,7 @@ resource "ibm_is_security_group_rule" "bastion_ingress_ssh_all" {
 resource "ibm_is_security_group_rule" "bastion_egress_ssh_all" {
   group     = "${ibm_is_security_group.bastion.id}"
   direction = "outbound"
-  remote    = "${ibm_is_security_group.maintenance.id}"
+  remote    = "${ibm_is_security_group.webserver.id}"
 
   tcp = {
     port_min = 22
