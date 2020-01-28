@@ -44,15 +44,13 @@ resource "ibm_is_instance" "webserver" {
   keys           = ["${data.ibm_is_ssh_key.sshkey.id}"]
 }
 
-/*
-# resource "ibm_is_security_group_rule" "maintenance_egress_443" {
-#   group     = "${ibm_is_security_group.maintenance.id}"
-#   direction = "outbound"
-#   remote    = "0.0.0.0/0"
-#   tcp = {
-#     port_min = 443
-#     port_max = 443
-#   }
-# }
-*/
+resource "ibm_is_security_group_rule" "maintenance_egress_443" {
+  group     = "${ibm_is_security_group.webserver.id}"
+  direction = "outbound"
+  remote    = "0.0.0.0/0"
 
+  tcp = {
+    port_min = 443
+    port_max = 443
+  }
+}
