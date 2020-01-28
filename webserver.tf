@@ -57,42 +57,39 @@ resource "ibm_is_security_group_rule" "maintenance_egress_443" {
 
 # Access to repos
 resource "ibm_is_security_group_rule" "http" {
-  direction  = "egress"
-  ether_type = "IPv4"
+  direction = "outbound"
 
   tcp {
     port_min = 80
     port_max = 80
   }
 
-  remote            = "10.0.0.0/8"
-  security_group_id = "${ibm_is_security_group.webserver.id}"
+  remote = "10.0.0.0/8"
+  group  = "${ibm_is_security_group.webserver.id}"
 }
 
 # Access to repos
 resource "ibm_is_security_group_rule" "https" {
-  direction  = "egress"
-  ether_type = "IPv4"
+  direction = "outbound"
 
   tcp {
     port_min = 443
     port_max = 443
   }
 
-  remote            = "10.0.0.0/8"
-  security_group_id = "${ibm_is_security_group.webserver.id}"
+  remote = "10.0.0.0/8"
+  group  = "${ibm_is_security_group.webserver.id}"
 }
 
 # Allow access to IBM DNS name servers
 resource "ibm_is_security_group_rule" "dns" {
-  direction  = "egress"
-  ether_type = "IPv4"
+  direction = "outbound"
 
   udp {
     port_min = 53
     port_max = 53
   }
 
-  remote            = "10.0.0.0/8"
-  security_group_id = "${ibm_is_security_group.webserver.id}"
+  remote = "10.0.0.0/8"
+  group  = "${ibm_is_security_group.webserver.id}"
 }
