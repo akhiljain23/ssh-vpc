@@ -8,8 +8,8 @@
 ##############################################################################
 
 resource "ibm_is_vpc" "vpc" {
-  name           = "${var.vpc_name}"
-  resource_group = "${data.ibm_resource_group.all_rg.id}"
+  name           = var.vpc_name
+  resource_group = data.ibm_resource_group.all_rg.id
 }
 
 ##############################################################################
@@ -22,27 +22,27 @@ resource "ibm_is_vpc_address_prefix" "subnet_prefix" {
   count = "1"
 
   name = "${var.unique_id}-az-${count.index + 1}"
-  zone = "${element(var.az_list, count.index)}"
-  vpc  = "${ibm_is_vpc.vpc.id}"
-  cidr = "${element(var.az-prefix, count.index)}"
+  zone = element(var.az_list, count.index)
+  vpc  = ibm_is_vpc.vpc.id
+  cidr = element(var.az-prefix, count.index)
 }
 
 resource "ibm_is_vpc_address_prefix" "backend_subnet_prefix" {
   count = "1"
 
   name = "${var.unique_id}-backend-prefix-zone-${count.index + 1}"
-  zone = "${var.ibm_region}-${(count.index % 3) + 1}"
-  vpc  = "${ibm_is_vpc.vpc.id}"
-  cidr = "${element(var.backend_cidr_blocks, count.index)}"
+  zone = "${var.ibm_region}-${count.index % 3 + 1}"
+  vpc  = ibm_is_vpc.vpc.id
+  cidr = element(var.backend_cidr_blocks, count.index)
 }
 
 resource "ibm_is_vpc_address_prefix" "frontend_subnet_prefix" {
   count = "1"
 
   name = "${var.unique_id}-frontend-prefix-zone-${count.index + 1}"
-  zone = "${var.ibm_region}-${(count.index % 3) + 1}"
-  vpc  = "${ibm_is_vpc.vpc.id}"
-  cidr = "${element(var.frontend_cidr_blocks, count.index)}"
+  zone = "${var.ibm_region}-${count.index % 3 + 1}"
+  vpc  = ibm_is_vpc.vpc.id
+  cidr = element(var.frontend_cidr_blocks, count.index)
 }
 
 ##############################################################################
@@ -54,12 +54,12 @@ resource "ibm_is_vpc_address_prefix" "frontend_subnet_prefix" {
 resource "ibm_is_subnet" "az1_subnet" {
   count           = "1"
   name            = "${var.unique_id}-az1-${element(var.subnet-cat, count.index)}"
-  vpc             = "${ibm_is_vpc.vpc.id}"
-  zone            = "${element(var.az_list, 0)}"
-  ipv4_cidr_block = "${element(var.az1_subnet, count.index)}"
+  vpc             = ibm_is_vpc.vpc.id
+  zone            = element(var.az_list, 0)
+  ipv4_cidr_block = element(var.az1_subnet, count.index)
 
   #network_acl     = "${ibm_is_network_acl.multizone_acl.id}"
-  public_gateway = "${element(ibm_is_public_gateway.test_gateway.*.id, 0)}"
+  public_gateway = element(ibm_is_public_gateway.test_gateway.*.id, 0)
 }
 
 # resource "ibm_is_subnet" "az2_subnet" {
@@ -85,24 +85,27 @@ resource "ibm_is_subnet" "az1_subnet" {
 # }
 
 resource "ibm_is_subnet" "backend-subnet" {
-  count           = "1"
-  name            = "${var.unique_id}-backend-subnet-${count.index + 1}"
-  vpc             = "${ibm_is_vpc.vpc.id}"
-  zone            = "${element(var.az_list, count.index)}"
-  ipv4_cidr_block = "${element(ibm_is_vpc_address_prefix.backend_subnet_prefix.*.cidr, count.index)}"
-
+  count = "1"
+  name  = "${var.unique_id}-backend-subnet-${count.index + 1}"
+  vpc   = ibm_is_vpc.vpc.id
+  zone  = element(var.az_list, count.index)
+  ipv4_cidr_block = element(
+    ibm_is_vpc_address_prefix.backend_subnet_prefix.*.cidr,
+    count.index,
+  )
   #network_acl     = "${ibm_is_network_acl.multizone_acl.id}"
 }
 
 resource "ibm_is_subnet" "frontend-subnet" {
-  count           = "1"
-  name            = "${var.unique_id}-frontend-subnet-${count.index + 1}"
-  vpc             = "${ibm_is_vpc.vpc.id}"
-  zone            = "${element(var.az_list, count.index)}"
-  ipv4_cidr_block = "${element(ibm_is_vpc_address_prefix.frontend_subnet_prefix.*.cidr, count.index)}"
-
+  count = "1"
+  name  = "${var.unique_id}-frontend-subnet-${count.index + 1}"
+  vpc   = ibm_is_vpc.vpc.id
+  zone  = element(var.az_list, count.index)
+  ipv4_cidr_block = element(
+    ibm_is_vpc_address_prefix.frontend_subnet_prefix.*.cidr,
+    count.index,
+  )
   #   #network_acl     = "${ibm_is_network_acl.multizone_acl.id}"
 }
 
 ##############################################################################
-

@@ -1,12 +1,12 @@
 provider "ibm" {
-  region = "${var.ibm_region}"
+  region = var.ibm_region
 
   #ibmcloud_api_key = "${var.ibmcloud_api_key}"
-  generation = "${var.generation}"
+  generation = var.generation
 }
 
 data "ibm_resource_group" "all_rg" {
-  name = "${var.resource_group_name}"
+  name = var.resource_group_name
 }
 
 locals {
@@ -14,3 +14,4 @@ locals {
   backend_egress_cidr  = "0.0.0.0/0" # cidr range required to contact software repositories when maintenance is enabled
   frontend_egress_cidr = "0.0.0.0/0" # DANGER: cidr range that can access the front end service
 }
+

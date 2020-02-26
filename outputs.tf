@@ -3,7 +3,7 @@
 ##############################################################################
 
 output "vpc_id" {
-  value = "${ibm_is_vpc.vpc.id}"
+  value = ibm_is_vpc.vpc.id
 }
 
 ##############################################################################
@@ -13,18 +13,13 @@ output "vpc_id" {
 ##############################################################################
 
 output "az1_subnet_ids" {
-  value = "${ibm_is_subnet.az1_subnet.*.id}"
+  value = ibm_is_subnet.az1_subnet.*.id
 }
 
 # output "az2_subnet_ids" {
 #   value = "${ibm_is_subnet.az2_subnet.*.id}"
 # }
-
-
 # output "az3_subnet_ids" {
 #   value = "${ibm_is_subnet.az3_subnet.*.id}"
 # }
-
-
 ##############################################################################
-
