@@ -29,7 +29,7 @@ resource "ibm_is_security_group_rule" "webserver_ingress_ssh_all" {
 # }
 
 resource "ibm_is_instance" "webserver" {
-  name    = "${var.unique_id}--webserver-vsi"
+  name    = "${var.unique_id}-webserver-vsi"
   image   = data.ibm_is_image.os.id
   profile = var.profile
 
