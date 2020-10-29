@@ -29,7 +29,7 @@ resource "ibm_is_security_group_rule" "bastion_egress_ssh_all" {
 }
 
 resource "ibm_is_instance" "bastion" {
-  name    = "${var.unique_id}--bastion-vsi"
+  name    = "${var.unique_id}-bastion-vsi"
   image   = data.ibm_is_image.os.id
   profile = var.profile
 
